@@ -1,0 +1,25 @@
+{
+  "$schema": "https://cdn.zuplo.com/schemas/routes.json",
+  "routes": [],
+  "versions": [
+    {
+      "name": "none",
+      "pathPrefix": "",
+      "info": {
+        "title": "My API, powered by Zuplo",
+        "description": "You can document your API directly in this file. Save your changes and open your developer portal to see it in action.",
+        "version": "0.0.0"
+      }
+    },
+    {
+      "name": "v1",
+      "pathPrefix": "/v1",
+      "info": {
+        "title": "My API V1, powered by Zuplo",
+        "description": "<insert description for v1>",
+        "version": "1.0.0"
+      }
+    }
+  ],
+  "policies": []
+}
