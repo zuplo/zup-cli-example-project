@@ -5,7 +5,7 @@ pipelines:
     - step:
         name: NPM Install
         script:
-          - npm ci
+          - npm install
     - step:
         name: Zup Deploy
         # set -o pipefail
