@@ -4,9 +4,7 @@
   "author": "",
   "copyright": "",
   "scripts": {
-    "dev": "zuplo dev",
-    "build": "zuplo build",
-    "test": "zuplo test",
+    "test": "npx @zuplo/cli test",
     "postinstall": "husky install"
   },
   "dependencies": {
