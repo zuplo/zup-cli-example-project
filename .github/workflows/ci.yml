@@ -1,0 +1,33 @@
+name: Zuplo CI on Pull Request
+
+on:
+  pull_request:
+
+jobs:
+  run-zup-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # This explicitly tells action to use the latest version of Zuplo from the public NPM registry
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+          registry-url: "https://registry.npmjs.com"
+          scope: "@zuplo"
+
+      # shell: bash is required so that pipefail is set.
+      # See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#exit-codes-and-error-action-preference
+      # This way if the deploy fails, we fail before piping to tee.
+      - name: Zup Deploy
+        shell: bash
+        env:
+          ZUPLO_API_KEY: ${{ secrets.ZUPLO_API_KEY }}
+        run: |
+          npx @zuplo/cli deploy --apiKey "$ZUPLO_API_KEY" | tee ./DEPLOYMENT_STDOUT
+
+      - name: Zup Test
+        shell: bash
+        run: |
+          npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/')
