@@ -3,6 +3,10 @@ image: node:18
 pipelines:
   default:
     - step:
+        name: NPM Install
+        script:
+          - npm ci
+    - step:
         name: Zup Deploy
         # set -o pipefail
         # This way if the deploy fails, we fail before piping to tee.
