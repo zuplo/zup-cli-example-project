@@ -1,6 +1,26 @@
 {
   "$schema": "https://cdn.zuplo.com/schemas/routes.json",
-  "routes": [],
+  "routes": [
+    {
+      "methods": [
+        "GET"
+      ],
+      "path": "/",
+      "summary": "New Route",
+      "description": "Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do `eiusmod tempor` incididunt ut labore et dolore magna aliqua.",
+      "version": "none",
+      "corsPolicy": "none",
+      "handler": {
+        "export": "default",
+        "module": "$import(./modules/hello-world)",
+        "options": {}
+      },
+      "policies": {
+        "inbound": []
+      },
+      "operationId": "8c7295b1-9b3d-41fd-8dc8-90373382f5c3"
+    }
+  ],
   "versions": [
     {
       "name": "none",
