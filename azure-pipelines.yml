@@ -21,6 +21,8 @@ steps:
 
 - script: |
     npx @zuplo/cli deploy --api-key $(ZUPLO_API_KEY)| tee ./DEPLOYMENT_STDOUT
+- bash: |
+    npx @zuplo/cli deploy --api-key $(ZUPLO_API_KEY)| tee ./DEPLOYMENT_STDOUT
 
 # - script: |
 #     npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/'
