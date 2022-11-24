@@ -9,11 +9,6 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-variables:
-- group: "Zuplo"
-- name: ZUPLO_API_KEY
-  value: $[variables.ZUPLO_API_KEY]
-
 steps:
 - task: NodeTool@0
   inputs:
