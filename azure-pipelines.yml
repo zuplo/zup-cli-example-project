@@ -15,6 +15,7 @@ steps:
     displayName: "npm install"
 
   - script: |
+      set -o pipefail 
       npx @zuplo/cli deploy --api-key $(ZUPLO_API_KEY) | tee ./DEPLOYMENT_STDOUT
     displayName: "zup deploy"
 
