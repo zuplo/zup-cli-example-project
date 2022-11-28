@@ -20,7 +20,7 @@ steps:
     displayName: "npm install"
 
   - script: |
-      npx @zuplo/cli deploy --api-key $(ZUPLO_API_KEY) > ./DEPLOYMENT_STDOUT
+      npx @zuplo/cli deploy --api-key $(ZUPLO_API_KEY) | tee ./DEPLOYMENT_STDOUT
     displayName: "zup deploy"
 # - script: |
 #     npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/'
