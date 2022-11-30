@@ -22,7 +22,8 @@ jobs:
           registry-url: "https://registry.npmjs.com"
           scope: "@zuplo"
 
-      - name: Checkout the actual branch
+      - name: Checkout the actual branch for the pull request
+        if: ${{ github.event_name == 'pull_request' }}
         run: |
           git checkout -b ${{ github.head_ref }}
 
