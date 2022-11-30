@@ -14,10 +14,22 @@ steps:
       npm install
     displayName: "npm install"
 
+  # set -o pipefail
+  # This way if the deploy fails, we fail before piping to tee.
+  # Note that you are not required to use tee. We are using it in this example so that the output is available to the terminal and written to the file.
   - script: |
       set -o pipefail 
       npx @zuplo/cli deploy --api-key $(ZUPLO_API_KEY) | tee ./DEPLOYMENT_STDOUT
-    displayName: "zup deploy"
+    displayName: "Zup Deploy"
 
   - script: |
       npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/')
+    displayName: "Zup Test"
+
+  - script: |
+      npx @zuplo/cli delete --url $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/') --api-key $(ZUPLO_API_KEY) --wait
+    displayName: "Zup Delete"
+
+  - script: |
+      npx @zuplo/cli list --api-key $(ZUPLO_API_KEY)
+    displayName: "Zup List"

@@ -1,24 +1,35 @@
 image: node:18
 
 pipelines:
-   pull-requests:
-    '**': #this runs as default for any branch not elsewhere defined
-    - step:
-        name: NPM Install
-        script:
-          - npm install
-    - step:
-        name: Zup Deploy
-        # set -o pipefail
-        # This way if the deploy fails, we fail before piping to tee.
-        script:
-          - set -o pipefail
-          - npx @zuplo/cli deploy --apiKey "$ZUPLO_API_KEY" | tee
-            ./DEPLOYMENT_STDOUT
-        artifacts:
-          - DEPLOYMENT_STDOUT
-    - step:
-        name: Zup Test
-        script:
-          - npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E
-            's/Deployed to (.*)/\1/')
+  pull-requests:
+    "**": #this runs as default for any branch not elsewhere defined
+      - step:
+          name: NPM Install
+          script:
+            - npm install
+      - step:
+          name: Zup Deploy
+          # set -o pipefail
+          # This way if the deploy fails, we fail before piping to tee.
+          # Note that you are not required to use tee. We are using it in this example so that the output is available to the terminal and written to the file.
+          script:
+            - set -o pipefail
+            - npx @zuplo/cli deploy --apiKey "$ZUPLO_API_KEY" | tee
+              ./DEPLOYMENT_STDOUT
+          artifacts:
+            - DEPLOYMENT_STDOUT
+      - step:
+          name: Zup Test
+          script:
+            - npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E
+              's/Deployed to (.*)/\1/')
+      - step:
+          name: Zup Delete
+          script:
+            - npx @zuplo/cli delete --url $(cat ./DEPLOYMENT_STDOUT |  sed -E
+              's/Deployed to (.*)/\1/') --apiKey "$ZUPLO_API_KEY" --wait
+      # This is not necessary but it showcases how you can list your zups
+      - step:
+          name: Zup List
+          script:
+            - npx @zuplo/cli list --apiKey "$ZUPLO_API_KEY"

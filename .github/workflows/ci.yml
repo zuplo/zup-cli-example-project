@@ -23,6 +23,7 @@ jobs:
       # shell: bash is required so that pipefail is set.
       # See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#exit-codes-and-error-action-preference
       # This way if the deploy fails, we fail before piping to tee.
+      # Note that you are not required to use tee. We are using it in this example so that the output is available to the terminal and written to the file.
       - name: Zup Deploy
         shell: bash
         env:
@@ -34,3 +35,14 @@ jobs:
         shell: bash
         run: |
           npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/')
+
+      - name: Zup Delete
+        shell: bash
+        run: |
+          npx @zuplo/cli delete --url $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/') --apiKey "$ZUPLO_API_KEY" --wait
+
+      # This is not necessary but it showcases how you can list your zups
+      - name: Zup List
+        shell: bash
+        run: |
+          npx @zuplo/cli list --apiKey "$ZUPLO_API_KEY"
