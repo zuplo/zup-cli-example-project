@@ -23,10 +23,11 @@ pipelines:
           - npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E
             's/Deployed to (.*)/\1/')
     - step:
-        name: Zup Delete
+        name: Zup Delete (if necessary)
         script:
-          - npx @zuplo/cli delete --url $(cat ./DEPLOYMENT_STDOUT |  sed -E
-            's/Deployed to (.*)/\1/') --apiKey "$ZUPLO_API_KEY" --wait
+          - if [[ -n "${BITBUCKET_PR_ID}"]]; then npx @zuplo/cli delete --url
+            $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/')
+            --apiKey "$ZUPLO_API_KEY" --wait; exit; fi
     # This is not necessary but it showcases how you can list your zups
     - step:
         name: Zup List
