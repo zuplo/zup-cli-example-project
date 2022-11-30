@@ -22,11 +22,14 @@ jobs:
           registry-url: "https://registry.npmjs.com"
           scope: "@zuplo"
 
+      - name: Echo variables
+        run: |
+          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+          echo "Tag name from github.ref: ${{  github.ref }}"
+          echo "Tag name from github.head_ref: ${{  github.head_ref }}"
+
       - name: NPM Install
         run: npm install
-
-      - name: Git Checkout the branch
-        run: git checkout ${{ github.ref_name }}
 
       # shell: bash is required so that pipefail is set.
       # See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#exit-codes-and-error-action-preference
