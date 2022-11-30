@@ -1,4 +1,4 @@
-name: Zuplo CI on Pull Request
+name: Zuplo CI
 
 on:
   push:
