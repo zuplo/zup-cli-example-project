@@ -29,6 +29,8 @@ steps:
   - script: |
       npx @zuplo/cli delete --url $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/') --api-key $(ZUPLO_API_KEY) --wait
     displayName: "Zup Delete"
+    # Only run this step if the build is a pull request
+    condition: eq(variables['Build.Reason'], 'PullRequest')
 
   # This is not necessary but it showcases how you can list your zups
   - script: |

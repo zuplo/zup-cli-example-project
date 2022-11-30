@@ -45,6 +45,7 @@ jobs:
           npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/')
 
       - name: Zup Delete
+        if: ${{ github.event_name == 'pull_request' }}
         shell: bash
         run: |
           npx @zuplo/cli delete --url $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/') --apiKey "$ZUPLO_API_KEY" --wait
