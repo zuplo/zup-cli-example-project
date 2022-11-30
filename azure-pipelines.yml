@@ -30,6 +30,7 @@ steps:
       npx @zuplo/cli delete --url $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/') --api-key $(ZUPLO_API_KEY) --wait
     displayName: "Zup Delete"
 
+  # This is not necessary but it showcases how you can list your zups
   - script: |
       npx @zuplo/cli list --api-key $(ZUPLO_API_KEY)
     displayName: "Zup List"
