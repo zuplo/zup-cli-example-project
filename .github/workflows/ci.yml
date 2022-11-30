@@ -6,6 +6,8 @@ on:
 jobs:
   run-zup-test:
     runs-on: ubuntu-latest
+    env:
+      ZUPLO_API_KEY: ${{ secrets.ZUPLO_API_KEY }}
 
     steps:
       - uses: actions/checkout@v3
@@ -26,8 +28,6 @@ jobs:
       # Note that you are not required to use tee. We are using it in this example so that the output is available to the terminal and written to the file.
       - name: Zup Deploy
         shell: bash
-        env:
-          ZUPLO_API_KEY: ${{ secrets.ZUPLO_API_KEY }}
         run: |
           npx @zuplo/cli deploy --apiKey "$ZUPLO_API_KEY" | tee ./DEPLOYMENT_STDOUT
 
