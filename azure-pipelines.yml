@@ -19,7 +19,7 @@ steps:
   # Note that you are not required to use tee. We are using it in this example so that the output is available to the terminal and written to the file.
   - script: |
       set -o pipefail 
-      npx @zuplo/cli deploy --api-key $(ZUPLO_API_KEY) | tee ./DEPLOYMENT_STDOUT
+      FORCE_COLOR=0 npx @zuplo/cli deploy --api-key $(ZUPLO_API_KEY) | tee ./DEPLOYMENT_STDOUT
     displayName: "Zup Deploy"
 
   - script: |
