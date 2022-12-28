@@ -1,4 +1,4 @@
-# zup-cli-example-project
+## zup-cli-example-project
 
 This repository contains an example project for setting up your own custom CI/CD
 for your Zuplo project. See
