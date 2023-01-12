@@ -1,0 +1,42 @@
+image: node:latest
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
+      when: always
+
+npm_install:
+  stage: build
+  script:
+    - npm install
+
+zup_deploy:
+  stage: deploy
+  script:
+    - npx @zuplo/cli deploy --apiKey "$ZUPLO_API_KEY" | tee ./DEPLOYMENT_STDOUT
+  artifacts:
+    expire_in: 30 minutes
+    paths:
+      - "./DEPLOYMENT_STDOUT"
+
+zup_test:
+  stage: deploy
+  needs: [zup_deploy]
+  script:
+    - npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/')
+
+zup_delete:
+  stage: deploy
+  needs: [zup_deploy, zup_test]
+  only:
+    - merge_requests
+  script:
+    - npx @zuplo/cli delete --url $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/') --apiKey "$ZUPLO_API_KEY" --wait
+
+# This is not necessary but it showcases how you can list your zups
+zup_list:
+  stage: deploy
+  needs: [zup_test]
+  script:
+    - npx @zuplo/cli list --apiKey "$ZUPLO_API_KEY"
