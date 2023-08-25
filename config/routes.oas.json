@@ -1,0 +1,30 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Converted from config/routes.json",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/": {
+      "x-zuplo-path": {
+        "pathMode": "url-pattern"
+      },
+      "get": {
+        "summary": "New Route",
+        "description": "Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do `eiusmod tempor` incididunt ut labore et dolore magna aliqua.",
+        "operationId": "8c7295b1-9b3d-41fd-8dc8-90373382f5c3",
+        "x-zuplo-route": {
+          "corsPolicy": "none",
+          "policies": {
+            "inbound": []
+          },
+          "handler": {
+            "export": "default",
+            "module": "$import(./modules/hello-world)",
+            "options": {}
+          }
+        }
+      }
+    }
+  }
+}
