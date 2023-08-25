@@ -4,17 +4,10 @@
   "author": "",
   "copyright": "",
   "scripts": {
-    "test": "npx @zuplo/cli test",
-    "postinstall": "husky install"
+    "dev": "zup dev",
+    "test": "zup test"
   },
   "dependencies": {
-    "@zuplo/core": "^5.35.0",
-    "@zuplo/runtime": "^5.35.0"
-  },
-  "devDependencies": {
-    "@types/chai": "4.3.4",
-    "@zuplo/test": "*",
-    "chai": "4.3.4",
-    "husky": "^7.0.4"
+    "zuplo": "^1.20230825.0"
   }
 }
