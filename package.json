@@ -8,6 +8,6 @@
     "test": "zup test"
   },
   "dependencies": {
-    "zuplo": "^1.20230825.1"
+    "zuplo": "^1.20231002.2233"
   }
 }
