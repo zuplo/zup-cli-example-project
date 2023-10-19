@@ -1,0 +1,6 @@
+[submodule "nested-projects/zup-cli-nested-project1"]
+	path = nested-projects/zup-cli-nested-project1
+	url = git@github.com:zuplo/zup-cli-nested-project1.git
+[submodule "nested-projects/zup-cli-nested-project2"]
+	path = nested-projects/zup-cli-nested-project2
+	url = git@github.com:zuplo/zup-cli-nested-project2.git
