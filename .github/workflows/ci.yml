@@ -18,7 +18,7 @@ jobs:
       # This explicitly tells action to use the latest version of Zuplo from the public NPM registry
       - uses: actions/setup-node@v3
         with:
-          node-version: "18.x"
+          node-version: "20.x"
           registry-url: "https://registry.npmjs.com"
           scope: "@zuplo"
 
