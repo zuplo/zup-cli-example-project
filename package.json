@@ -7,6 +7,6 @@
     "dev": "zup dev"
   },
   "dependencies": {
-    "zuplo": "latest"
+    "zuplo": "^1.20240923.804"
   }
 }

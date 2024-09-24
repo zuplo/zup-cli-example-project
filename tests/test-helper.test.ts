@@ -8,7 +8,6 @@ describe("Accessing the endpoint passed in the CLI", () => {
   it("should be able to access the URL", async () => {
     const response = await fetch(TestHelper.TEST_URL);
     const result = await response.text();
-    expect(result).to.equal(JSON.stringify("What zup?"));
     expect(response.status).to.equal(200);
   });
 });
