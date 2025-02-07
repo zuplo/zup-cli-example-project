@@ -7,6 +7,10 @@
     "dev": "zup dev"
   },
   "dependencies": {
-    "zuplo": "^1.20240923.804"
+    "zuplo": "6.38.0"
+  },
+  "devDependencies": {
+    "@types/chai": "5.0.1",
+    "chai": "^5.1.2"
   }
 }
