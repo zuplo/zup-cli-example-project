@@ -37,12 +37,12 @@ jobs:
       - name: Zup Deploy
         shell: bash
         run: |
-          npx @zuplo/cli deploy --apiKey "$ZUPLO_API_KEY" | tee ./DEPLOYMENT_STDOUT
+          npx @zuplo/cli deploy --apiKey "$ZUPLO_API_KEY" 2>&1 | tee ./DEPLOYMENT_STDOUT
 
       - name: Zup Test
         shell: bash
         run: |
-          npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/')
+          npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT | grep "Deployed to" | sed -n -E 's/.*Deployed to (https:\/\/[^ ]+).*/\1/p')
 
       - name: Zup Delete
         if: ${{ github.event_name == 'pull_request' }}

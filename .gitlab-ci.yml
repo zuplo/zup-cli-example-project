@@ -14,7 +14,8 @@ npm_install:
 zup_deploy:
   stage: deploy
   script:
-    - npx @zuplo/cli deploy --apiKey "$ZUPLO_API_KEY" | tee ./DEPLOYMENT_STDOUT
+    - npx @zuplo/cli deploy --apiKey "$ZUPLO_API_KEY" 2>&1| tee
+      ./DEPLOYMENT_STDOUT
   artifacts:
     expire_in: 30 minutes
     paths:
@@ -23,20 +24,20 @@ zup_deploy:
 zup_test:
   stage: deploy
   needs: [zup_deploy]
-  script:
-    - npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/')
+  script: |
+    npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -n -E 's/.*Deployed to (https:\/\/[^ ]+).*/\1/p')
 
 zup_delete:
   stage: deploy
   needs: [zup_deploy, zup_test]
   only:
     - merge_requests
-  script:
-    - npx @zuplo/cli delete --url $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/') --apiKey "$ZUPLO_API_KEY" --wait
+  script: |
+    npx @zuplo/cli delete --url $(cat ./DEPLOYMENT_STDOUT |  sed -n -E 's/.*Deployed to (https:\/\/[^ ]+).*/\1/p') --apiKey "$ZUPLO_API_KEY" --wait
 
 # This is not necessary but it showcases how you can list your zups
 zup_list:
   stage: deploy
   needs: [zup_test]
-  script:
-    - npx @zuplo/cli list --apiKey "$ZUPLO_API_KEY"
+  script: |
+    npx @zuplo/cli list --apiKey "$ZUPLO_API_KEY"

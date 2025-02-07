@@ -19,15 +19,15 @@ steps:
   # Note that you are not required to use tee. We are using it in this example so that the output is available to the terminal and written to the file.
   - script: |
       set -o pipefail 
-      FORCE_COLOR=0 npx @zuplo/cli deploy --api-key $(ZUPLO_API_KEY) | tee ./DEPLOYMENT_STDOUT
+      FORCE_COLOR=0 npx @zuplo/cli deploy --api-key $(ZUPLO_API_KEY) 2>&1 | tee ./DEPLOYMENT_STDOUT
     displayName: "Zup Deploy"
 
   - script: |
-      npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/')
+      npx @zuplo/cli test --endpoint $(cat ./DEPLOYMENT_STDOUT |  sed -n -E 's/.*Deployed to (https:\/\/[^ ]+).*/\1/p')
     displayName: "Zup Test"
 
   - script: |
-      npx @zuplo/cli delete --url $(cat ./DEPLOYMENT_STDOUT |  sed -E 's/Deployed to (.*)/\1/') --api-key $(ZUPLO_API_KEY) --wait
+      npx @zuplo/cli delete --url $(cat ./DEPLOYMENT_STDOUT |  sed -n -E 's/.*Deployed to (https:\/\/[^ ]+).*/\1/p') --api-key $(ZUPLO_API_KEY) --wait
     displayName: "Zup Delete"
     # Only run this step if the build is a pull request
     condition: eq(variables['Build.Reason'], 'PullRequest')
